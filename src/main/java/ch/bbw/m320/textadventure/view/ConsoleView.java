@@ -1,5 +1,6 @@
 package ch.bbw.m320.textadventure.view;
 
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
@@ -7,25 +8,37 @@ import java.util.Scanner;
  */
 public class ConsoleView {
 
+    private final PrintStream out;
     private final Scanner scanner = new Scanner(System.in);
+
+    public ConsoleView() {
+        this(System.out);
+    }
+
+    /**
+     * Creates a view writing to the given stream, used for tests and other sinks.
+     */
+    public ConsoleView(PrintStream out) {
+        this.out = out;
+    }
 
     public void print(String message) {
         if (message != null && !message.isBlank()) {
-            System.out.println(message);
+            out.println(message);
         }
     }
 
     public void showRoom(String roomName, String description) {
-        System.out.println();
-        System.out.println("--- " + roomName + " ---");
-        System.out.println(description);
+        out.println();
+        out.println("--- " + roomName + " ---");
+        out.println(description);
     }
 
     /**
      * Reads one line of input and splits it into verb and optional object.
      */
     public Input readInput() {
-        System.out.print("> ");
+        out.print("> ");
         var line = scanner.nextLine().trim().toLowerCase();
         var parts = line.split("\\s+", 2);
         return new Input(parts[0], parts.length > 1 ? parts[1] : "");

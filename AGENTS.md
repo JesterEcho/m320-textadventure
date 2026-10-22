@@ -6,6 +6,7 @@ Persönlich gesammelte Regeln für den KI-Agenten im Projekt m320-textadventure.
 
 - Buildsystem ist Gradle (Wrapper `gradlew.bat` / `gradlew`), Java-Toolchain 25.
 - Jackson (`jackson-dataformat-yaml`) ist die einzige erlaubte Library.
+- Ausnahme: Test-Frameworks (JUnit) sind für `src/test` erlaubt, zählen nicht zur Produkt-Runtime.
 - Einstiegspunkt ist `ch.bbw.m320.textadventure.Main` (`application`-Plugin).
 
 ## Code-Konventionen
