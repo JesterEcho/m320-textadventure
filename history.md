@@ -20,4 +20,10 @@ Generierte Zusammenfassung der Prompts, die zum Erarbeiten dieser Lösung benutz
 | 7 | «Planung: Was fehlt bis zur Abgabe am 5. November und in welcher Reihenfolge arbeiten?» | Reflexion | Plan mit Unit-Tests → Zusatzfeature (Save/Load) → eigene Story → `Selbstevaluation.md`. |
 | 8 | «Erstelle die Änderungen für den Commit dieser Woche.» | Beispiel erhalten | JUnit-6-Testabhängigkeit, `ConsoleView` mit austauschbarem Output-Stream, 17 Unit-Tests für `GameEngine` und `StoryLoader`. |
 
+## Arbeitswoche 4 (KW 44/2026)
+
+| # | Prompt (sinngemäss) | Rolle der KI | Resultat |
+|---|---------------------|--------------|----------|
+| 9 | «Es ist die nächste Woche, arbeite am nächsten Commit.» (Plan: Zusatzfeature Save/Load) | Beispiel erhalten | `SaveGame`-Record, `SaveGameManager` mit Jackson-YAML-Persistenz und Slot-Validierung, `save`/`load` als eingebaute Befehle, 5 neue Tests; End-to-End im Spiel verifiziert. |
+
 *(Diese Tabelle wird laufend ergänzt; die Prompts sind sinngemäss zusammengefasst.)*

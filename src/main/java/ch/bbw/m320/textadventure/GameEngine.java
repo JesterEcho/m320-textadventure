@@ -2,6 +2,7 @@ package ch.bbw.m320.textadventure;
 
 import ch.bbw.m320.textadventure.model.Action;
 import ch.bbw.m320.textadventure.model.GameState;
+import ch.bbw.m320.textadventure.model.SaveGame;
 import ch.bbw.m320.textadventure.model.Story;
 import ch.bbw.m320.textadventure.view.ConsoleView;
 
@@ -22,6 +23,21 @@ public class GameEngine {
         this.story = story;
         this.state = state;
         this.view = view;
+    }
+
+    /**
+     * Captures the current progress as a serializable snapshot.
+     */
+    public SaveGame snapshot() {
+        return new SaveGame(state.currentRoom(), state.states().stream().sorted().toList());
+    }
+
+    /**
+     * Restores progress from a snapshot and shows the restored room.
+     */
+    public void restore(SaveGame save) {
+        state.restore(save.currentRoom(), save.states());
+        enterRoom();
     }
 
     /**
