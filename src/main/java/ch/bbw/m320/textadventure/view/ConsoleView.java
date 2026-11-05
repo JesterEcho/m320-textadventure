@@ -11,6 +11,7 @@ public class ConsoleView {
     private final PrintStream out;
     private final Scanner scanner = new Scanner(System.in);
 
+    @SuppressWarnings("java:S106")
     public ConsoleView() {
         this(System.out);
     }

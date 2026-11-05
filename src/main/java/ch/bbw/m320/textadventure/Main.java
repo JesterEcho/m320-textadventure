@@ -78,7 +78,7 @@ public class Main {
         try {
             saves.save(engine.snapshot(), slot);
             view.print("Game saved in slot '" + slot + "'.");
-        } catch (UncheckedIOException e) {
+        } catch (UncheckedIOException _) {
             view.print("Could not save the game.");
         }
     }
@@ -96,7 +96,7 @@ public class Main {
             }
             view.print("Game loaded from slot '" + slot + "'.");
             engine.restore(save.get());
-        } catch (UncheckedIOException e) {
+        } catch (UncheckedIOException _) {
             view.print("Could not load the game.");
         }
     }
