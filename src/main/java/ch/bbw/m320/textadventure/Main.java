@@ -28,13 +28,24 @@ public class Main {
         this.engine = new GameEngine(story, state, view);
     }
 
+    /**
+     * Starts the game with the story given as the first argument, defaulting to tutorial.yaml.
+     */
     public static void main(String[] args) {
-        var story = new StoryLoader().load("tutorial.yaml");
+        var story = new StoryLoader().load(storyResource(args));
         var state = new GameState(story.startRoom());
         var view = new ConsoleView();
 
         view.print(story.description());
         new Main(story, state, view).start();
+    }
+
+    private static String storyResource(String[] args) {
+        var name = args.length > 0 ? args[0] : "tutorial";
+        if (name.startsWith("--args=")) {
+            name = name.substring("--args=".length());
+        }
+        return name.endsWith(".yaml") ? name : name + ".yaml";
     }
 
     private void start() {

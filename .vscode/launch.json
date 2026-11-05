@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Tutorial Story",
+            "request": "launch",
+            "mainClass": "ch.bbw.m320.textadventure.Main"
+        },
+        {
+            "type": "java",
+            "name": "Dragon Ball Story",
+            "request": "launch",
+            "mainClass": "ch.bbw.m320.textadventure.Main",
+            "args": ["dragonball"]
+        }
+    ]
+}

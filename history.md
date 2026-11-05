@@ -26,4 +26,10 @@ Generierte Zusammenfassung der Prompts, die zum Erarbeiten dieser Lösung benutz
 |---|---------------------|--------------|----------|
 | 9 | «Es ist die nächste Woche, arbeite am nächsten Commit.» (Plan: Zusatzfeature Save/Load) | Beispiel erhalten | `SaveGame`-Record, `SaveGameManager` mit Jackson-YAML-Persistenz und Slot-Validierung, `save`/`load` als eingebaute Befehle, 5 neue Tests; End-to-End im Spiel verifiziert. |
 
+## Abgabewoche (KW 45/2026)
+
+| # | Prompt (sinngemäss) | Rolle der KI | Resultat |
+|---|---------------------|--------------|----------|
+| 10 | «Es ist Abgabetag, finalisiere alles. Die eigene Geschichte soll zu Dragon Ball sein — als klassisches Textadventure.» | Beispiel erhalten / Ideen entwickeln | `dragonball.yaml`: «The Seven Signals» — klassische Jagd nach den sieben Dragon Balls à la Zork/Colossal Cave mit 20 Räumen und freier Erkundung ab Bulmas Lager (vier Himmelsrichtungen). Ein Rätsel pro Kugel (Boss Rabbit, Schildkröte/Flying Nimbus, Kamehameha beim Turtle Hermit, Yamchas Canyon, ewige Flamme, Lüftungsgitter in Pilafs Schatzkammer), Finale in der Halle der sieben Sterne, neues globales Verb `summon`. Keine Sackgassen: jede Sperre verweist auf den Lösungsweg, jeder Raum hat einen Rückzug. Story-Auswahl via Programmargument oder VS Code Launch-Konfig, `tutorial.yaml` bleibt Standard; 11 Walkthrough-Tests; README.md ergänzt. |
+
 *(Diese Tabelle wird laufend ergänzt; die Prompts sind sinngemäss zusammengefasst.)*

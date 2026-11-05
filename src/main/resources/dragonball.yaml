@@ -1,0 +1,566 @@
+startRoom: goku-home # Classic Dragon Ball adventure: find the seven Dragon Balls and summon Shenron
+description: |
+  DRAGON BALL: The Seven Signals.
+  You are Goku - a boy with a tail, raised on Mount Paozu by your
+  grandfather. His keepsake, a glowing orange ball with four stars,
+  sits on the mantel. This morning a girl named Bulma crashed her
+  jeep into your forest: she hunts seven "Dragon Balls", and whoever
+  brings all seven together may summon the Eternal Dragon, Shenron,
+  who grants a single wish.
+  Collect the seven Dragon Balls and reach the summoning place.
+  Travel with <go (direction)>, examine with <look (object)>,
+  fight with <fight (target)>, learn with <learn (technique)>.
+  Type <help verbs> for the verb list. <look radar> shows the signals.
+rooms:
+  goku-home:
+    name: Grandpa's House
+    description: |
+      A small wooden house on Mount Paozu, built by your grandfather's
+      hands. Outside, the pines hum; on the mantel, between a framed
+      photo and an orange gi, sits Grandpa's keepsake: a palm-sized
+      orange sphere with four red stars inside it.
+      The forest road leads south.
+    verbs:
+      go:
+        south:
+          - room: bulma-camp
+      look:
+        keepsake:
+          - message: "The Four-Star Ball. It glows softly, warm like Grandpa's hand on your shoulder."
+        photo:
+          - message: "Grandpa Gohan, laughing. 'The world is bigger than this mountain, Goku.'"
+        house:
+          - message: "One room, one futon, one kettle. Everything a boy needs - except answers."
+      take:
+        ball:
+          - addState: four-star
+            message: "You wrap the Four-Star Ball in cloth and sling it in your pack. Bulma says it belongs to the set. Grandpa would want to see where it goes."
+        photo:
+          - message: "Grandpa stays where he is - in the frame, and in you."
+
+  bulma-camp:
+    name: The Crashed Jeep
+    description: |
+      Bulma's jeep sits nose-down in a crater, a capsule house
+      inflated beside it. Bulma taps a wristwatch-sized device:
+      her Dragon Radar.
+      'Seven signals, kid. One is in your pocket, one is far west,
+      one east across the sea, one south in the desert, one north
+      past the mountains - and two burn behind black walls.'
+      Paths leave in all directions: north, west, east and south.
+    verbs:
+      go:
+        north:
+          - room: mountain-pass
+        west:
+          - room: rabbit-village
+        east:
+          - room: turtle-beach
+        south:
+          - room: desert
+      look:
+        bulma:
+          - message: "Sixteen, blue-haired, armed with a handgun and a genius. 'Wish anything, she said. ANYTHING. I'm holding out for the perfect boyfriend.'"
+        radar:
+          - message: "The radar's face sweeps green: one signal west in a plagued village, one far east across the sea, one south in the desert, one north beyond the mountains, and two burning close together behind black walls in the far west."
+        jeep:
+          - message: "Bent, dented, and somehow still drivable. Capsule Corporation builds to last."
+        capsule-house:
+          - message: "A whole house from a pill the size of a thumb. The future is strange."
+      take:
+        radar:
+          - addState: radar
+            message: "Bulma clips the Dragon Radar to your belt. 'You're the one with the tail and the legs, kid. Go be the hero. I'll hold the fort.'"
+
+  rabbit-village:
+    name: The Plagued Village
+    description: |
+      A village of low huts, doors barred, carrots nailed to every
+      post as warnings. Rabbit-eared goons in sunglasses lounge by
+      a well, and on a carrot-throne sits a fat man in a white suit -
+      the Boss Rabbit. The villagers whisper: he touched their elder's
+      son and turned him into a carrot.
+      The road back east leads to the crashed jeep; west, black
+      mountains rise over a desert of glass.
+    verbs:
+      go:
+        east:
+          - room: bulma-camp
+        west:
+          - room: wastelands
+      look:
+        goons:
+          - message: "Rabbit ears, sunglasses, switchblades. Small-time crooks riding a monster's coattails."
+        boss:
+          - message: "Boss Rabbit, picking his teeth with a carrot. Everything the villagers whispered is true: his touch turns flesh into vegetables."
+        well:
+          - message: "Dry. A carrot-motif is scratched into the stone."
+      fight:
+        goons:
+          - addState: goons-beaten
+            message: "You walk through the goons like wind through grass. They scatter into the alleys, wailing about their ears."
+        boss:
+          - ifState: goons-beaten
+            addState: boss-beaten
+            message: "With his goons gone, Boss Rabbit lunges - and you catch his hand, twisting until he squeals for mercy. The carrot curse breaks; the village breathes again."
+          - message: "Boss Rabbit snaps his fingers - his goons dogpile you first. (Deal with the goons before the boss.)"
+      take:
+        ball:
+          - ifState: boss-beaten
+            addState: two-star
+            message: "The elder presses a small orange sphere into your hands: the Two-Star Ball, stolen from the shrine by the rabbit gang months ago. 'You broke the curse, child. Take what is yours by right of courage.'"
+          - message: "The village elder guards a bundle at his chest, watching the carrot-throne. 'Not while that monster still wears his crown.'"
+
+  wastelands:
+    name: The Black Desert
+    description: |
+      A desert of black glass, wind hissing over shards. Ahead,
+      impossibly huge, rises a fortress of dark stone: Pilaf's
+      Castle. Its walls show no door - only a small tower at the
+      base, half buried in drifted glass.
+      East, the road returns to the plagued village.
+    verbs:
+      go:
+        east:
+          - room: rabbit-village
+        north:
+          - ifState: vent
+            message: "You pry the loose grid aside and crawl into the maintenance duct, drops of condensation ticking past your ears."
+            room: treasury
+          - message: "The fortress walls are sheer black stone, forty meters of it. No door, no window. (Something at the tower's base might yield - look around.)"
+      look:
+        tower:
+          - addState: vent
+            message: "Behind the tower's base, loose stones frame a rusted grid - a maintenance vent, wide enough for a boy with a tail to crawl through."
+        glass:
+          - message: "Obsidian shards, sharp as knives. Old lightning baked this desert in one night, the villagers say."
+        fortress:
+          - message: "Pilaf's Castle. The radar says two Dragon Balls burn inside it, close together."
+
+  treasury:
+    name: Pilaf's Treasury
+    description: |
+      A vault of stolen things: gold statues, capsule racks,
+      a wall of monitors - and a pedestal under a glass bell,
+      holding an orange sphere that lights the whole room.
+      Between you and the pedestal, a woman in a red uniform checks
+      the trap-plating on the floor. Mai, field agent of Emperor Pilaf.
+      A corridor of star-carved arches glows to the north; the vent
+      you came through is south.
+    verbs:
+      go:
+        south:
+          - room: wastelands
+        north:
+          - room: hall-of-stars-1
+      look:
+        mai:
+          - message: "Calm, competent, thoroughly underpaid. Her stun-rifle crackles as she sweeps the trap-plating."
+        pedestal:
+          - message: "Under the glass bell: the One-Star Ball, first of the seven ever forged. Mai's traps guard every tile around it."
+        treasure:
+          - message: "Pilaf robs the world to furnish one room. A crown, three scepters, and a rubber duck wearing a tiny cape."
+      fight:
+        mai:
+          - addState: mai-beaten
+            message: "Mai fires - you catch the stun-bolt out of the air, flick it back, and she goes stiff as a board, propped politely against a gold statue. '...Emperor Pilaf will hear of this,' her eyes seem to say."
+      take:
+        ball:
+          - ifState: mai-beaten
+            addState: one-star
+            message: "You lift the glass bell and take the One-Star Ball. The pedestal sinks, and somewhere above, alarms begin to weep."
+          - message: "The floor around the pedestal still crackles with Mai's traps. (Deal with the agent first.)"
+
+  hall-of-stars-1:
+    name: Hall of Seven Stars - First Arch
+    description: |
+      A corridor deep inside the castle, carved with seven great
+      arches. In each arch burns a socket shaped like a Dragon Ball.
+      The first socket has already lit: the Four-Star Ball in your
+      pack hums in answer, warm through the cloth.
+      The second arch stands dark to the north; the treasury is south.
+    verbs:
+      go:
+        south:
+          - room: treasury
+        north:
+          - ifState: four-star
+            message: "The first socket blazes. Grandpa's keepsake lights the first arch."
+            room: hall-of-stars-2
+          - message: "The first socket stays dark - an heirloom must open this hall."
+
+  hall-of-stars-2:
+    name: Hall of Seven Stars - Second Arch
+    description: |
+      The second arch waits, its socket dark. Carvings around it
+      show a village in fear, and a crown of carrots.
+      The first arch burns behind you, to the south.
+    verbs:
+      go:
+        south:
+          - room: hall-of-stars-1
+        north:
+          - ifState: two-star
+            message: "The Two-Star Ball hums - the socket drinks its light, and the second arch flares."
+            room: hall-of-stars-3
+          - message: "The second socket stays dark. The carvings speak of a plagued village west of the crossroads - a village freed from a rabbit's crown."
+
+  hall-of-stars-3:
+    name: Hall of Seven Stars - Third Arch
+    description: |
+      The third arch, carved with a turtle riding a surf of clouds.
+      Its socket waits, dark.
+    verbs:
+      go:
+        south:
+          - room: hall-of-stars-2
+        north:
+          - ifState: three-star
+            message: "The Three-Star Ball slides into the socket. The arch drinks the light and opens."
+            room: hall-of-stars-4
+          - message: "The third socket stays dark. The carvings point east, across the sea - to an island where a Turtle Hermit keeps a keepsake."
+
+  hall-of-stars-4:
+    name: Hall of Seven Stars - Fourth Arch
+    description: |
+      The fourth arch, carved with a canyon and a wolf's fang.
+      Its socket waits, dark.
+    verbs:
+      go:
+        south:
+          - room: hall-of-stars-3
+        north:
+          - ifState: five-star
+            message: "The Five-Star Ball clicks home. The fourth arch blazes with light."
+            room: hall-of-stars-5
+          - message: "The fourth socket stays dark. The carvings tell of a desert canyon to the south, guarded by a bandit's wolf fang fist."
+
+  hall-of-stars-5:
+    name: Hall of Seven Stars - Fifth Arch
+    description: |
+      The fifth arch, carved with a mountain swallowed by flame.
+      Its socket waits, dark.
+    verbs:
+      go:
+        south:
+          - room: hall-of-stars-4
+        north:
+          - ifState: six-star
+            message: "The Six-Star Ball glows in the socket - the mountain in the carvings cools, and the arch opens."
+            room: hall-of-stars-6
+          - message: "The fifth socket stays dark. The carvings point north, past the mountains, to a castle behind a wall of eternal flame."
+
+  hall-of-stars-6:
+    name: Hall of Seven Stars - Sixth Arch
+    description: |
+      The sixth arch, carved with a vault and a woman standing
+      guard. Its socket waits, dark. Beyond it, you can hear a
+      small imperious voice shouting somewhere in the castle.
+    verbs:
+      go:
+        south:
+          - room: hall-of-stars-5
+        north:
+          - ifState: one-star
+            message: "The One-Star Ball fills the sixth socket. The arch blazes, and the way to the throne stands open."
+            room: throne
+          - message: "The sixth socket stays dark. The carvings show a treasury under this very castle - and an agent in red."
+
+  throne:
+    name: The Emperor's Throne Room
+    description: |
+      A vast round chamber, its ceiling open to the darkening sky.
+      On a throne shaped like a green dragon-sphere sits a small blue
+      creature in a cloak and crown: Emperor Pilaf. He holds the
+      Seven-Star Ball aloft, glaring at it.
+      'Mai! Shu! WHY is my radar still showing five signals OUTSIDE
+      my walls?!' He has not noticed you. The sixth arch burns at
+      your back, to the south.
+    verbs:
+      go:
+        south:
+          - room: hall-of-stars-6
+      look:
+        pilaf:
+          - message: "Emperor Pilaf, self-crowned, knee-high to you, holding the seventh Dragon Ball like a scepter. His radar hangs from his neck."
+        throne:
+          - message: "A throne of welded green glass, shaped to cradle a small ego."
+        sky:
+          - message: "Pilaf has cut the ceiling open - he means to summon the dragon right here, the moment all seven are his."
+      fight:
+        pilaf:
+          - addState: seven-star
+            message: "'SEIZE HIM!' You pluck the Seven-Star Ball from Pilaf's gloved hand before he can blink. Mai and a dog in a ninja suit scoop up their emperor and vanish through a floor hatch, still issuing proclamations. The ball is warm. The sky is waiting. (summon dragon)"
+      summon:
+        dragon:
+          - ifState: seven-star
+            message: "You set the seven Dragon Balls in a wide circle. They flare one by one - then the sky turns black, wind screams inward, and a voice older than the mountains fills the world: 'I AM SHENRON. SPEAK YOUR WISH.'"
+            room: the-wish
+          - message: "Pilaf cackles from his throne, hugging the Seven-Star Ball: 'The wish belongs to the one with ALL SEVEN, peasant. Come back when you've collected more than dust.'"
+
+  the-wish:
+    name: The Wish
+    description: |
+      Shenron coils across the whole sky, green scales glittering
+      with lightning, eyes like crimson moons.
+      'SPEAK. YOUR WISH.'
+      You think of the mantel at home, the framed photo, the four
+      stars glowing in your pack.
+      'Shenron... I wish Grandpa Gohan could come back, for one day,
+      to see the world past this mountain.'
+      The dragon's eyes blaze - GRANTED - and the world turns white.
+      When the light clears, you are sitting on the porch at Mount
+      Paozu. Grandpa sits beside you, looking east over the pines at
+      the sunrise, the way he always did.
+      'It's bigger than the mountain, Goku,' he says. 'I told you.'
+      THE END - The Wish.
+    verbs:
+      look:
+        shenron:
+          - message: "The Eternal Dragon, taller than the sky, patient as stone."
+        grandpa:
+          - message: "Here. One day. Real."
+
+  turtle-beach:
+    name: The Turtle Beach
+    description: |
+      White sand, warm surf - and a sea turtle lying on its back
+      in the dunes, far from any water, flippers paddling the air.
+      It looks exhausted, and it is staring at you with an
+      expression of profound embarrassment.
+      The sea stretches east to the horizon; the forest road returns
+      west to the crashed jeep.
+    verbs:
+      go:
+        west:
+          - room: bulma-camp
+        east:
+          - ifState: nimbus
+            message: "'NIMBUS!' The golden cloud streaks out of the sky. You step on like a stair, and the sea slides away beneath you toward a tiny island."
+            room: kame-house
+          - message: "The sea rolls east, wide and green and far. No boat on this beach could cross it. (A cloud could. Help looks at you with flippers - look turtle.)"
+      look:
+        turtle:
+          - addState: turtle-saved
+            message: "You haul the turtle onto your shoulders and wade out until it swims free, laughing in bubbles. From the far horizon, a dark speck races across the water - an old man on a surfboard arrives, laughing: 'You saved my friend! I am the Turtle Hermit, Muten Roshi. Few would carry a turtle so far. I owe you a favor.'"
+        sea:
+          - message: "Green forever - and far out, one pink-roofed island rides the waves."
+        hermit:
+          - ifState: turtle-saved
+            message: "The old man on the surfboard, sunglasses, beard, and a shell on his back. 'One favor, one cloud,' he repeats."
+          - message: "Just sea and sand for now."
+      take:
+        nimbus:
+          - ifState: turtle-saved
+            addState: nimbus
+            message: "The hermit whistles twice. From a clear sky, a golden cloud descends and banks beside you like a loyal dog. 'Flying Nimbus. It carries only the pure of heart - which, kid, is why I never ride it.'"
+          - message: "The turtle paddles the air, pointedly. (Help it first - look turtle.)"
+
+  kame-house:
+    name: Kame House
+    description: |
+      A pink-domed cottage on a tiny island, roses in the yard,
+      surf on all sides. The old hermit sits on the porch in a
+      lawn chair, reading a magazine, a small orange sphere
+      hanging from his neck on a cord.
+      The cloud waits to carry you back west, over the sea.
+    verbs:
+      go:
+        west:
+          - room: turtle-beach
+      look:
+        master:
+          - message: "Muten Roshi, the Turtle Hermit - older than he looks, stronger than he looks, sillier than both. The sphere at his neck has three red stars inside."
+        ball:
+          - ifState: kamehameha
+            message: "The Three-Star Ball, strung like a keepsake. He takes it off and weighs it in his palm when he looks at you now."
+          - message: "The Three-Star Ball, worn smooth by an old man's hands. It glows when it catches the light."
+        island:
+          - message: "One house, one palm tree, one thousand years of tide."
+      learn:
+        kamehameha:
+          - addState: kamehameha
+            message: "The hermit stands, plants his feet, and cups his hands at his side - 'KA-ME-HA-ME...' - and the sea splits to the reef. It takes you the whole afternoon to make the water ripple. 'Slow is smooth, kid. That was the Kamehameha. Try it once and go home.'"
+        anything:
+          - message: "The hermit's lessons are three: stand, breathe, and don't be clever."
+      take:
+        ball:
+          - ifState: kamehameha
+            addState: three-star
+            message: "'A keepsake for a student, not a stranger - and you are my student now.' He unties the cord and drops the Three-Star Ball into your pack, suddenly gruff to cover how pleased he is."
+          - message: "The hermit tucks the Three-Star Ball into his shirt and pretends not to see you. (Only a student leaves with the master's keepsake - learn kamehameha.)"
+
+  desert:
+    name: The Diablo Desert
+    description: |
+      Sand, cactus, and wind that howls in a canyon mouth to the
+      south. Signs nailed to the rocks read: TURN BACK. BANDIT
+      TERRITORY. THIS MEANS YOU.
+      From the shade of an overhang, a young man with a scar on his
+      cheek watches you, hand on a wooden sword. A blue cat floats
+      at his shoulder.
+      The road north returns to the crashed jeep.
+    verbs:
+      go:
+        north:
+          - room: bulma-camp
+        south:
+          - ifState: ally
+            message: "Yamcha waves you through the canyon, shouting advice about loose rocks."
+            room: yamcha-hideout
+          - message: "A wolf's-head silhouette flickers across the canyon mouth - the bandit bars the way, falling into a stance. (fight yamcha)"
+      look:
+        yamcha:
+          - message: "Desert bandit Yamcha, and Puar, his floating shapeshifter cat. 'The Dragon Balls, kid,' he calls. 'I need one wish: to stand in a room full of girls without passing out. Don't judge me.'"
+        puar:
+          - message: "A blue cat that talks and floats and worries, in that order."
+        canyon:
+          - message: "A slot in the red rock, cool and shadowed - and his hideout somewhere beyond."
+      fight:
+        yamcha:
+          - addState: ally
+            message: "His Wolf Fang Fist splits a boulder; your fist stops his sword-hand an inch from your nose - and stays there. A long silence. Then Yamcha laughs, sheathes the sword, and offers his hand: 'Twenty years alone out here. You're the first to keep up. Partnership?'"
+        bandit:
+          - message: "The bandit raises an eyebrow. 'Yamcha. The name's Yamcha.'"
+
+  yamcha-hideout:
+    name: The Bandit's Hideout
+    description: |
+      A dry cavern behind the canyon: a hammock, a campfire, a
+      wall of baseball memorabilia, and a wooden chest with the
+      lid cracked open. Something orange glows inside.
+      Puar floats by the entrance, tail curled. The canyon leads
+      north into the desert.
+    verbs:
+      go:
+        north:
+          - room: desert
+      look:
+        chest:
+          - message: "A bandit's treasure: five coins, a signed baseball glove, and a Dragon Ball wrapped in a catcher's mitt."
+        baseball:
+          - message: "A whole wall of it. The desert gets long."
+        puar:
+          - message: "'He found the ball in a flooded ruin last spring,' Puar whispers. 'He guards it like a game he refuses to lose.'"
+      take:
+        ball:
+          - addState: five-star
+            message: "Yamcha leans over your shoulder as you lift the Five-Star Ball from the catcher's mitt. 'Five stars. Hey - kid. When you summon that dragon... put in a good word about the girl thing.'"
+
+  mountain-pass:
+    name: The Mountain Pass
+    description: |
+      The road north climbs between gray cliffs hung with pine.
+      Wind combs the tall grass, and wolves watch from the ridgeline
+      with polite, patient hunger.
+      Somewhere beyond the pass, a red glow stains the clouds.
+      The road south returns to the crashed jeep.
+    verbs:
+      go:
+        south:
+          - room: bulma-camp
+        north:
+          - room: fire-mountain
+      look:
+        wolves:
+          - message: "Three gray shapes, lean as knives. They follow at a distance, testing your tail with their eyes."
+        sign:
+          - message: "NORTH: FIRE MOUNTAIN. BRING WATER. AND SORRY."
+        glow:
+          - message: "The clouds to the north are lit from below, always. No storm ever made that light."
+      fight:
+        wolves:
+          - message: "The pack surrounds you - and the tail betrays you, curling into your hand like a third fist. You laugh, spin, and the wolves decide there are easier deer. They are not wrong."
+
+  fire-mountain:
+    name: Fire Mountain
+    description: |
+      A mountain wrapped in a pillar of flame that never dies, never
+      spreads, never sleeps. In its shadow, a huge man in armor
+      tends a vegetable garden with an axe over one shoulder - the
+      Ox-King, flame-proof and patient as the mountain.
+      'Turn back, child!' he booms. 'Only my daughter crosses the
+      fire, and even she is late for dinner!'
+      Behind the flame pillar: the silhouette of a castle keep.
+      The pass leads south.
+    verbs:
+      go:
+        south:
+          - room: mountain-pass
+        north:
+          - ifState: kamehameha
+            message: "You plant your feet by the flame pillar, cup your hands - 'KA-ME-HA-ME-HA!' - and the wave pushes the eternal fire off the mountain like a held breath released. The gates stand open. The Ox-King drops his axe."
+            room: castle-hall
+          - message: "The flame wall towers over the castle gate, taller than the keep, hot enough to bend the air. Nothing walks through that. (Only the Turtle School's art could part an eternal fire.)"
+      look:
+        ox-king:
+          - message: "A mountain of a man in a mountain's shadow, watering tomatoes in the ember-light. His castle stands behind the fire; his daughter is somewhere in it."
+        flame:
+          - message: "Fire without fuel, older than the village, gentle to the garden and merciless to the gate."
+        chi-chi:
+          - message: "A small shape moves behind a castle window - the Ox-King's daughter, waiting for someone to put the fire out."
+
+  castle-hall:
+    name: The Ox-King's Hall
+    description: |
+      A smoke-dark keep, grand and homely at once: banners, a long
+      table, a throne dais - and on a cushion under a glass dome,
+      an orange sphere that lights the rafters.
+      The stairs are swept, the fire is out, and someone has
+      hung a welcome-back banner in the window.
+      The mountain exit is south.
+    verbs:
+      go:
+        south:
+          - room: fire-mountain
+      look:
+        dome:
+          - message: "Under glass: the Six-Star Ball on a cushion of purple velvet. A paper tag reads: CHI-CHI'S - DO NOT SELL."
+        banner:
+          - message: "'WELCOME HOME CHI-CHI' in enormous letters. Half a heart is drawn next to it."
+        ox-king:
+          - message: "He fills the doorway behind you, crying openly at the sight of his unburned hall. 'The fire - my wife's grave-fire - out after all these years. Take the ball, child. It should travel, not smolder.'"
+      take:
+        ball:
+          - addState: six-star
+            message: "You lift the glass dome and lift the Six-Star Ball. The Ox-King presses your shoulder with a hand like a dinner plate, careful as a crane, and from upstairs a girl's voice calls down: 'Papa? Who put the fire out?'"
+
+# global verbs: synonyms and error messages
+globals:
+  default:
+    unknownVerb: You cannot do that.
+    unknownObject: ""
+  help:
+    synonyms: [ wtf ]
+    unknownVerb: |
+      Most of the time, typing something like <verb object> works. Example: <fight goons>.
+      Travel with <go (direction)>, examine with <look (object)>,
+      fight with <fight (target)>, learn with <learn (technique)>.
+      Collect all seven Dragon Balls - <look radar> shows the signals -
+      then summon the dragon where the sky is open.
+      Type <help verbs> to see this text again.
+    unknownObject: "Possible verbs include: go, take, examine, fight, learn, summon,..."
+  go:
+    synonyms: [ walk, fly, travel ]
+    unknownVerb: You can't go there!
+    unknownObject: You can't go {} from here!
+  take:
+    synonyms: [ grab, get, pick ]
+    unknownVerb: There's nothing to take!
+    unknownObject: You can't take {}!
+  look:
+    synonyms: [ examine ]
+    unknownVerb: Nothing to look at in here!
+    unknownObject: You cannot look at {}!
+  fight:
+    synonyms: [ attack, punch ]
+    unknownVerb: There is nothing to fight here!
+    unknownObject: You cannot fight {}!
+  learn:
+    synonyms: [ study ]
+    unknownVerb: There is nothing to learn here!
+    unknownObject: You cannot learn {}!
+  summon:
+    synonyms: [ call, awaken ]
+    unknownVerb: There is nothing to summon here!
+    unknownObject: You cannot summon {}!
